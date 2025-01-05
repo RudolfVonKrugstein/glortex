@@ -39,6 +39,25 @@ pub fn broadcast_float(
   Ok(Tensor(ort_tensor, shape, t))
 }
 
+// create a tensor from binary
+pub fn from_binary(
+  data: BitArray,
+  shape: List(Int),
+  t: Dtype,
+) -> Result(Tensor, String) {
+  use ort_tensor <- result.try(ffi.from_binary(data, shape, dtype.type_tuple(t)))
+
+  Ok(Tensor(ort_tensor, shape, t))
+}
+
+// get the binary data from a tensor
+pub fn to_binary(tensor: Tensor, limit: Int) -> Result(BitArray, String) {
+  let Tensor(ort_tensor, _shape, t) = tensor
+  use res <- result.try(ffi.to_binary(ort_tensor, dtype.precision(t), limit))
+
+  Ok(res)
+}
+
 // Create an list of floats from binary data with the given precision
 fn binary_to_floats(
   binary: BitArray,

@@ -44,3 +44,8 @@ pub fn run(model: Model, inputs: List(Tensor)) -> Result(List(Tensor), String) {
     }),
   )
 }
+
+pub fn show_session(model: Model) {
+  let Model(ort_model) = model
+  ffi.show_session(ort_model)
+}

@@ -35,7 +35,11 @@ pub fn precision(dtype: Dtype) {
   }
 }
 
-pub fn from_type_and_prec(t: atom.Atom, prec: Int) {
+pub fn type_tuple(dtype: Dtype) -> #(atom.Atom, Int) {
+  #(type_atom(dtype), precision(dtype))
+}
+
+pub fn from_type_and_prec(t: atom.Atom, prec: Int) -> Result(Dtype, String) {
   case atom.to_string(t), prec {
     "s", 8 -> Ok(SignedInt8)
     "s", 16 -> Ok(SignedInt16)

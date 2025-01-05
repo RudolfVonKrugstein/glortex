@@ -43,7 +43,7 @@ pub fn run(
   run_nif(model, inputs) |> nif_result_to_result
 }
 
-@external(erlang, "Elixir.Ortex.Native", "show_ession")
+@external(erlang, "Elixir.Ortex.Native", "show_session")
 fn show_session_nif(
   model: OrtModel,
 ) -> NifResult(
@@ -114,11 +114,11 @@ pub fn slice(
 @external(erlang, "Elixir.Ortex.Native", "reshape")
 fn reshape_nif(
   tensor: OrtTensor,
-  shape: dynamic.Dynamic,
+  shape: List(Int),
 ) -> NifResult(OrtTensor, String)
 
 pub fn reshape(tensor: OrtTensor, shape: List(Int)) -> Result(OrtTensor, String) {
-  reshape_nif(tensor, list_to_tuple(shape)) |> nif_result_to_result
+  reshape_nif(tensor, shape) |> nif_result_to_result
 }
 
 @external(erlang, "Elixir.Ortex.Native", "concatenate")
